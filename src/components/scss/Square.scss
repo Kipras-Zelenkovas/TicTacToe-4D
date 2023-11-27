@@ -1,0 +1,10 @@
+@import "../../shared.scss";
+
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid $primary 2px;
+    width: 16rem;
+    height: 16rem;
+}
