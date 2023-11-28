@@ -1,37 +1,35 @@
 import { useEffect, useState } from "react";
 import "./scss/Board.scss";
 import { Square } from "./Square";
-import { winnerCheck } from "../utils/gameLogic";
+import { handle, winnerCheck } from "../utils/gameLogic";
 
-export const Board = () => {
-    const [mainBoard, setMainBoard] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+export const Board = ({ depth }) => {
+    const [board, setBoard] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     const [cross, setCross] = useState(true);
+
+    const currentDepth = depth;
 
     useEffect(() => {
         setTimeout(() => {
-            let winner = winnerCheck(mainBoard);
+            let winner = winnerCheck(board);
 
             if (winner != false) {
                 alert("Winned is: " + winner);
             }
         }, 100);
-    }, mainBoard);
-
-    const handle = (i) => {
-        let newBoard = [...mainBoard];
-        if (mainBoard[i] == 0) {
-            cross == true ? (newBoard[i] = "X") : (newBoard[i] = "O");
-            setMainBoard(newBoard);
-            setCross(!cross);
-        } else {
-            alert("Square is already occupied!");
-        }
-    };
+    }, board);
 
     return (
         <div className="board">
-            {mainBoard.map((item, index) => {
-                return <Square handle={handle} item={item} index={index} />;
+            {board.map((item, index) => {
+                return (
+                    <Square
+                        item={item}
+                        index={index}
+                        depth={currentDepth}
+                        handle={handle(index, board)}
+                    />
+                );
             })}
         </div>
     );

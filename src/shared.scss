@@ -6,10 +6,15 @@ $secondary: #22162c;
 $accent: #af6260;
 
 //Default site configuration
-:root {
+#root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     color-scheme: light dark;
     color: $text;
@@ -25,5 +30,4 @@ $accent: #af6260;
 body {
     margin: 0;
     padding: 0;
-    display: flex;
 }
