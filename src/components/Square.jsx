@@ -9,6 +9,8 @@ export const Square = ({
     index = undefined,
     parentBoard = undefined,
     setParentBoard = undefined,
+    globalCross = undefined,
+    setGlobalCross = undefined,
 }) => {
     return (
         <div
@@ -24,6 +26,8 @@ export const Square = ({
                     parentBoardIndex={index}
                     parentBoard={parentBoard}
                     setParentBoard={setParentBoard}
+                    globalCross={globalCross}
+                    setGlobalCross={setGlobalCross}
                 />
             ) : (
                 ""

@@ -11,12 +11,13 @@ import {
 export const Board = ({
     depth,
     maxDepth,
+    globalCross = undefined,
+    setGlobalCross = undefined,
     parentBoard = undefined,
     setParentBoard = undefined,
     parentBoardIndex = undefined,
 }) => {
     const [board, setBoard] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-    const [cross, setCross] = useState(true);
 
     useEffect(() => {
         setTimeout(() => {
@@ -41,7 +42,7 @@ export const Board = ({
         <div className="board">
             {board.map((item, index) => {
                 const test = () =>
-                    handle(index, board, setBoard, cross, setCross);
+                    handle(index, board, setBoard, globalCross, setGlobalCross);
 
                 return (
                     <Square
@@ -52,6 +53,8 @@ export const Board = ({
                         parentBoard={board}
                         setParentBoard={setBoard}
                         index={index}
+                        globalCross={globalCross}
+                        setGlobalCross={setGlobalCross}
                     />
                 );
             })}
