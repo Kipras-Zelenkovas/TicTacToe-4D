@@ -26,16 +26,24 @@ export const winnerCheck = (board) => {
     }
 };
 
-export const handle = (i, board, setBoard, cross, setCross, setChildIndex) => {
+export const handle = (i, board, setBoard, cross, setCross) => {
     let newBoard = [...board];
     if (board[i] == 0) {
         cross == true ? (newBoard[i] = "X") : (newBoard[i] = "O");
         setBoard(newBoard);
         setCross(!cross);
-        setChildIndex(i);
     } else {
         alert("Square is already occupied!");
     }
+};
+
+export const setNextSquare = (
+    parentBoard,
+    childIndex,
+    index,
+    setChildIndex
+) => {
+    parentBoard[index] == 0 ? setChildIndex(index) : setChildIndex(undefined);
 };
 
 export const makeSubWinner = (
@@ -44,12 +52,14 @@ export const makeSubWinner = (
     currentDepth,
     parentIndex,
     parentBoard,
-    setParentBoard
+    setParentBoard,
+    setChildIndex
 ) => {
     if (winner != false && maxDepth > currentDepth) {
         let newBoard = [...parentBoard];
         newBoard[parentIndex] = winner;
         setParentBoard(newBoard);
+        setChildIndex(undefined);
     }
 };
 

@@ -1,3 +1,4 @@
+import { setNextSquare } from "../utils/gameLogic";
 import { Board } from "./Board";
 import "./scss/Square.scss";
 
@@ -7,20 +8,33 @@ export const Square = ({
     maxDepth,
     handle,
     index = undefined,
-    parentBoard = undefined,
-    setParentBoard = undefined,
+    board = undefined,
+    setBoard = undefined,
     globalCross = undefined,
     setGlobalCross = undefined,
     childIndex = undefined,
     setChildIndex = undefined,
     active = undefined,
+    parentBoard = undefined,
 }) => {
     return (
         <div
             className="square"
-            onClick={() =>
-                active ? (depth - 1 == 0 ? handle() : false) : false
-            }
+            onClick={() => {
+                if (active) {
+                    if (depth - 1 == 0) {
+                        handle();
+                        maxDepth != 1
+                            ? setNextSquare(
+                                  parentBoard,
+                                  childIndex,
+                                  index,
+                                  setChildIndex
+                              )
+                            : false;
+                    }
+                }
+            }}
         >
             {item != 0 ? (
                 item
@@ -29,8 +43,8 @@ export const Square = ({
                     depth={depth - 1}
                     maxDepth={maxDepth}
                     parentBoardIndex={index}
-                    parentBoard={parentBoard}
-                    setParentBoard={setParentBoard}
+                    parentBoard={board}
+                    setParentBoard={setBoard}
                     globalCross={globalCross}
                     setGlobalCross={setGlobalCross}
                     childIndex={childIndex}

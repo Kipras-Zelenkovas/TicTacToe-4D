@@ -3,7 +3,7 @@ import "./App.scss";
 import { Board } from "./components/Board";
 
 function App() {
-    const maxDepth = 2;
+    const maxDepth = 3;
     const [cross, setCross] = useState(true);
     const [childIndex, setChildIndex] = useState(undefined);
     return (

@@ -34,8 +34,13 @@ export const Board = ({
                     depth,
                     parentBoardIndex,
                     parentBoard,
-                    setParentBoard
+                    setParentBoard,
+                    setChildIndex
                 );
+            }
+
+            if (maxDepth == 1) {
+                setChildIndex(undefined);
             }
 
             makeWinnerMain(winner, maxDepth, depth);
@@ -46,14 +51,7 @@ export const Board = ({
         <div className={"board" + (active ? " active" : " unactive")}>
             {board.map((item, index) => {
                 const test = () =>
-                    handle(
-                        index,
-                        board,
-                        setBoard,
-                        globalCross,
-                        setGlobalCross,
-                        setChildIndex
-                    );
+                    handle(index, board, setBoard, globalCross, setGlobalCross);
 
                 return (
                     <Square
@@ -61,14 +59,15 @@ export const Board = ({
                         depth={depth}
                         maxDepth={maxDepth}
                         handle={test}
-                        parentBoard={board}
-                        setParentBoard={setBoard}
+                        board={board}
+                        setBoard={setBoard}
                         index={index}
                         globalCross={globalCross}
                         setGlobalCross={setGlobalCross}
                         childIndex={childIndex}
                         setChildIndex={setChildIndex}
                         active={active}
+                        parentBoard={parentBoard}
                     />
                 );
             })}
