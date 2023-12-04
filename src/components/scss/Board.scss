@@ -8,3 +8,13 @@
     height: 100%;
     width: 100%;
 }
+
+.active {
+    cursor: pointer;
+    border: solid 4px green;
+}
+
+.unactive {
+    cursor: not-allowed;
+    border: solid 4px red;
+}

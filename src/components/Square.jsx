@@ -11,11 +11,16 @@ export const Square = ({
     setParentBoard = undefined,
     globalCross = undefined,
     setGlobalCross = undefined,
+    childIndex = undefined,
+    setChildIndex = undefined,
+    active = undefined,
 }) => {
     return (
         <div
             className="square"
-            onClick={() => (depth - 1 == 0 ? handle() : false)}
+            onClick={() =>
+                active ? (depth - 1 == 0 ? handle() : false) : false
+            }
         >
             {item != 0 ? (
                 item
@@ -28,6 +33,8 @@ export const Square = ({
                     setParentBoard={setParentBoard}
                     globalCross={globalCross}
                     setGlobalCross={setGlobalCross}
+                    childIndex={childIndex}
+                    setChildIndex={setChildIndex}
                 />
             ) : (
                 ""

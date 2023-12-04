@@ -3,6 +3,7 @@ import "./scss/Board.scss";
 import { Square } from "./Square";
 import {
     handle,
+    makeNextMove,
     makeSubWinner,
     makeWinnerMain,
     winnerCheck,
@@ -16,8 +17,11 @@ export const Board = ({
     parentBoard = undefined,
     setParentBoard = undefined,
     parentBoardIndex = undefined,
+    childIndex = undefined,
+    setChildIndex = undefined,
 }) => {
     const [board, setBoard] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    const active = makeNextMove(childIndex, parentBoardIndex);
 
     useEffect(() => {
         setTimeout(() => {
@@ -39,10 +43,17 @@ export const Board = ({
     }, board);
 
     return (
-        <div className="board">
+        <div className={"board" + (active ? " active" : " unactive")}>
             {board.map((item, index) => {
                 const test = () =>
-                    handle(index, board, setBoard, globalCross, setGlobalCross);
+                    handle(
+                        index,
+                        board,
+                        setBoard,
+                        globalCross,
+                        setGlobalCross,
+                        setChildIndex
+                    );
 
                 return (
                     <Square
@@ -55,6 +66,9 @@ export const Board = ({
                         index={index}
                         globalCross={globalCross}
                         setGlobalCross={setGlobalCross}
+                        childIndex={childIndex}
+                        setChildIndex={setChildIndex}
+                        active={active}
                     />
                 );
             })}

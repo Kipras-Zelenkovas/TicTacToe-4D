@@ -5,6 +5,7 @@ import { Board } from "./components/Board";
 function App() {
     const maxDepth = 2;
     const [cross, setCross] = useState(true);
+    const [childIndex, setChildIndex] = useState(undefined);
     return (
         <div className="main">
             <Board
@@ -12,6 +13,8 @@ function App() {
                 maxDepth={maxDepth}
                 globalCross={cross}
                 setGlobalCross={setCross}
+                childIndex={childIndex}
+                setChildIndex={setChildIndex}
             />
         </div>
     );

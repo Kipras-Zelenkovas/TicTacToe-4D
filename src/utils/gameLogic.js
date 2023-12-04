@@ -26,12 +26,13 @@ export const winnerCheck = (board) => {
     }
 };
 
-export const handle = (i, board, setBoard, cross, setCross) => {
+export const handle = (i, board, setBoard, cross, setCross, setChildIndex) => {
     let newBoard = [...board];
     if (board[i] == 0) {
         cross == true ? (newBoard[i] = "X") : (newBoard[i] = "O");
         setBoard(newBoard);
         setCross(!cross);
+        setChildIndex(i);
     } else {
         alert("Square is already occupied!");
     }
@@ -56,4 +57,8 @@ export const makeWinnerMain = (winner, maxDepth, currentDepth) => {
     if (winner != false && maxDepth == currentDepth) {
         alert("Winner of the game is: " + winner);
     }
+};
+
+export const makeNextMove = (setIndex, parentIndex) => {
+    return setIndex == undefined || setIndex == parentIndex ? true : false;
 };
