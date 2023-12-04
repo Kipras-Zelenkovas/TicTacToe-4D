@@ -19,7 +19,9 @@ export const Square = ({
 }) => {
     return (
         <div
-            className="square"
+            className={
+                item != 0 || depth - 1 == 0 || maxDepth > 2 ? "square" : ""
+            }
             onClick={() => {
                 if (active) {
                     if (depth - 1 == 0) {

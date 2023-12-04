@@ -48,7 +48,16 @@ export const Board = ({
     }, board);
 
     return (
-        <div className={"board" + (active ? " active" : " unactive")}>
+        <div
+            className={
+                "board" +
+                (depth - 1 == 0 && maxDepth != 1
+                    ? active
+                        ? " active"
+                        : " unactive"
+                    : "")
+            }
+        >
             {board.map((item, index) => {
                 const test = () =>
                     handle(index, board, setBoard, globalCross, setGlobalCross);
