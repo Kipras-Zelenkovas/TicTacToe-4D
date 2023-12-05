@@ -3,9 +3,15 @@ import "./App.scss";
 import { Board } from "./components/Board";
 
 function App() {
-    const maxDepth = 1;
+    // GAME DEPTH - MORE DEPTH MORE GAMES IN EACH SQUARE
+    const maxDepth = 2;
+
+    // IF PLAYER IS CROSS - X
     const [cross, setCross] = useState(true);
+
+    // PLAYED INDEX IN CHILD GAME
     const [childIndex, setChildIndex] = useState(undefined);
+
     return (
         <div className="main">
             <Board

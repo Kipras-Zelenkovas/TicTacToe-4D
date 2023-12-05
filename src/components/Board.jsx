@@ -2,32 +2,37 @@ import { useEffect, useState } from "react";
 import "./scss/Board.scss";
 import { Square } from "./Square";
 import {
-    handle,
-    makeNextMove,
+    setMove,
+    playableGames,
     makeSubWinner,
     makeWinnerMain,
     winnerCheck,
 } from "../utils/gameLogic";
 
 export const Board = ({
-    depth,
-    maxDepth,
-    globalCross = undefined,
-    setGlobalCross = undefined,
-    parentBoard = undefined,
-    setParentBoard = undefined,
-    parentBoardIndex = undefined,
-    childIndex = undefined,
-    setChildIndex = undefined,
+    depth, // Current board depth
+    maxDepth, // Game depth
+    globalCross,
+    setGlobalCross,
+    parentBoard = undefined, // Parent board if maxDepth is more than 1
+    setParentBoard = undefined, // Parent board useState set function
+    parentBoardIndex = undefined, // Parent board index
+    childIndex = undefined, // SUB-GAME board index
+    setChildIndex = undefined, // SUB-GAME board index useState set function
 }) => {
+    // Game board
     const [board, setBoard] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-    const active = makeNextMove(childIndex, parentBoardIndex);
+
+    // Checking if game is playable
+    const playableGame = playableGames(childIndex, parentBoardIndex);
 
     useEffect(() => {
         setTimeout(() => {
+            // Checking winner current game
             let winner = winnerCheck(board);
 
             if (depth < maxDepth) {
+                // Checking winner in SUB-GAME if currentDepth is less than maxDepth
                 makeSubWinner(
                     winner,
                     maxDepth,
@@ -39,10 +44,13 @@ export const Board = ({
                 );
             }
 
+            // If game depth is 1 then there is no SUB-GAMES and sets child to undefined
+            // that let's to make move on any square
             if (maxDepth == 1) {
                 setChildIndex(undefined);
             }
 
+            // Checking if there is a winner in main game.
             makeWinnerMain(winner, maxDepth, depth);
         }, 100);
     }, board);
@@ -51,23 +59,31 @@ export const Board = ({
         <div
             className={
                 "board" +
+                // If game is playable and make game active or unactive
                 (depth - 1 == 0 && maxDepth != 1
-                    ? active
+                    ? playableGame
                         ? " active"
                         : " unactive"
                     : "")
             }
         >
             {board.map((item, index) => {
-                const test = () =>
-                    handle(index, board, setBoard, globalCross, setGlobalCross);
+                // Make callable function in each boar square that handles player move
+                const setPlayerMove = () =>
+                    setMove(
+                        index,
+                        board,
+                        setBoard,
+                        globalCross,
+                        setGlobalCross
+                    );
 
                 return (
                     <Square
                         item={item}
                         depth={depth}
                         maxDepth={maxDepth}
-                        handle={test}
+                        setPlayerMove={setPlayerMove}
                         board={board}
                         setBoard={setBoard}
                         index={index}
@@ -75,7 +91,7 @@ export const Board = ({
                         setGlobalCross={setGlobalCross}
                         childIndex={childIndex}
                         setChildIndex={setChildIndex}
-                        active={active}
+                        playableGame={playableGame}
                         parentBoard={parentBoard}
                     />
                 );
